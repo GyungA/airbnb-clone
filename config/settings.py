@@ -39,10 +39,19 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-PROJECT_APPS = [
-    'users.apps.UsersConfig',
-]
+THIRD_PARTY_APPS = ["django_countries", ]
 
+PROJECT_APPS = [
+    'core.apps.CoreConfig',
+    'users.apps.UsersConfig',
+    'rooms.apps.RoomsConfig',
+    'reviews.apps.ReviewsConfig',
+    'reservations.apps.ReservationsConfig',
+    'lists.apps.ListsConfig',
+    'conversations.apps.ConversationsConfig',
+]   
+
+# CITIES_COUNTRY_MODEL = 'my_cities_app.CustomCountryModel'
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
@@ -126,3 +135,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.User'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")

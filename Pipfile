@@ -4,15 +4,20 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+black = "*"
 django = "==2.2.5"
 pillow = "*"
+django-countries = "*"
+django-cities = {path = "./django-cities"}
+cities = "*"
 
 [dev-packages]
 flake8 = "*"
 black = "*"
+pylint = "*"
+autopep8 = "*"
 
 [requires]
-python_version = "3.9"
 
 [pipenv]
 allow_prereleases = true
