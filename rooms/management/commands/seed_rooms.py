@@ -19,13 +19,14 @@ class Command(BaseCommand):
         room_type = room_models.RoomType.objects.all()
         seeder.add_entity(room_models.Room, number,
         {
-            "name": lambda x: seeder.faker.address(),
+            "name": lambda x: seeder.faker.company(),
             "host": lambda x: random.choice(all_users), 
             "room_type": lambda x: random.choice(room_type),
-            "price": lambda x: random.randint(0, 300),
-            "beds": lambda x: random.randint(0, 5),
-            "bedrooms": lambda x: random.randint(0, 5),
-            "bathrooms": lambda x: random.randint(0, 5),
+            "guests": lambda x: random.randint(1, 20),
+            "price": lambda x: random.randint(1, 300),
+            "beds": lambda x: random.randint(1, 5),
+            "bedrooms": lambda x: random.randint(1, 5),
+            "baths": lambda x: random.randint(1, 5),
             })
         seeder.execute()
         self.stdout.write(self.style.SUCCESS(f"{number} rooms created!"))
