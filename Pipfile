@@ -10,6 +10,7 @@ pillow = "*"
 django-countries = "*"
 django-cities = {path = "./django-cities"}
 cities = "*"
+django-seed = "*"
 
 [dev-packages]
 flake8 = "*"
