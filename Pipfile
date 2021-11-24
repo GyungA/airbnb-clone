@@ -8,9 +8,9 @@ black = "*"
 django = "==2.2.5"
 pillow = "*"
 django-countries = "*"
-django-cities = {path = "./django-cities"}
 cities = "*"
 django-seed = "*"
+psycopg2 = "*"
 
 [dev-packages]
 flake8 = "*"
