@@ -1,13 +1,13 @@
 import random
+from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
-from django.contrib.admin.utils import flatten
 from django_seed import Seed
 from rooms import models as room_models
 from users import models as user_models
-from lists import models as list_models
+from reservations import models as reservation_models
 
 
-NAME = "lists"
+NAME = "reservations"
 
 class Command(BaseCommand):
     help = f"This command creates {NAME}"
@@ -22,15 +22,15 @@ class Command(BaseCommand):
         seeder = Seed.seeder()
         all_users = user_models.User.objects.all()
         all_rooms = room_models.Room.objects.all()
-        seeder.add_entity(list_models.List, number,
+        seeder.add_entity(reservation_models.Reservation, number,
         {
-            "user": lambda x: random.choice(all_users),
+            "guest": lambda x: random.choice(all_users),
+            "room": lambda x: random.choice(all_rooms),
+            "check_in": lambda x: datetime.now()
+            + timedelta(days=random.randint(0, 2)),
+            "check_out": lambda x: datetime.now()
+            + timedelta(days=random.randint(3, 25)),
         })
-        created_lists = seeder.execute()
-        created_clean = flatten(created_lists.values())
-        for pk in created_clean:
-            list = list_models.List.objects.get(pk=pk)
-            to_add = all_rooms[random.randint(0, 6) : random.randint(6, 30)]
-            list.rooms.add(*to_add)
+        seeder.execute()
 
         self.stdout.write(self.style.SUCCESS(f"{number} {NAME} created!"))
