@@ -14,9 +14,9 @@ Home
     {% if page.has_previous %}
         <a href="?page={{page.previous_page_number}}">Previous</a>
     {% endif %}
-    Page {{page.number}} of {{page.next_page_number}}
+    Page {{page.number}} of {{page.paginator.num_pages}}
     {% if page.has_next %}
-        <a href="?page={{page.number|add:"1"}}">Next</a>
+        <a href="?page={{page.next_page_number}}">Next</a>
     {% endif %}
 
     {% for page in page.paginator.page_range %}
