@@ -6,8 +6,12 @@ Home
 
 {% block content %}
 
-    {% for room in object_list %}
-        <h4>{{room.name}} / {{room.price}}$</h4>
+    {{now}}
+
+    {% for room in rooms %}
+        <h4><a href="{% url "rooms:detail" room.pk %}">
+            {{room.name}} / {{room.price}}$
+        </a></h4>
     {% endfor %}
 
     <h5>
