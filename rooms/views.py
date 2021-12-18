@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from . import models, forms
 
 
@@ -72,15 +73,23 @@ class SearchView(View):
                 if superhost is True:
                     filter_args["host__superhost"] = True
 
-                for amenity in amenities:
-                    filter_args["amenities"] = amenity
-
-                for facility in facilities:
-                    filter_args["facilities"] = facility
-
                 rooms = models.Room.objects.filter(**filter_args)
+                for amenity in amenities:
+                    rooms = rooms.filter(amenities=amenity)
+                for facility in facilities:
+                    rooms = rooms.filter(facilities=facility)
+
+                qs = rooms.order_by("-created")
+
+                paginator = Paginator(qs, 10, orphans=5)
+
+                page = request.GET.get("page", 1)
+
+                rooms = paginator.get_page(page)
+
+                return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
 
         else:
             form = forms.SearchForm()
+        return render(request, "rooms/search.html", {"form": form})
 
-        return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
