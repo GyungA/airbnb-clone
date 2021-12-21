@@ -24,8 +24,8 @@ class SignUpForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
     password1 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
 
-    def clean_eamil(self):
-        email = self.clean_data.get("email")
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
         try:
             models.User.objects.get(email=email)
             raise forms.ValidationError("User already exists with that email")
@@ -40,3 +40,14 @@ class SignUpForm(forms.Form):
             raise forms.ValidationError("Password confirmation does not match")
         else:
             return password
+
+    def save(self):
+        first_name = self.cleaned_data.get("first_name")
+        last_name = self.cleaned_data.get("last_name")
+        email = self.cleaned_data.get("email")
+        password = self.cleaned_data.get("password")
+        user = models.User.objects.create_user(email, email, password)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        
