@@ -145,7 +145,17 @@ MEDIA_URL = "/media/"
 
 
 # Email Configuration
-EMAIL_HOST = "smtp.mailgun.org"
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = "smtp.mailgun.org"
+# EMAIL_PORT = "587"
+# EMAIL_HOST_USER = os.environ.get("GMAIL_USERNAME")
+# EMAIL_HOST_PASSWORD = os.environ.get("GMAIL_PASSWORD")
+# EMAIL_FROM = EMAIL_HOST_USER
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = "587"
-EMAIL_HOST_USER = "brad@sandboxa5c0ee73c4f24b71b37c92585e326d06.mailgun.org"
-EMAIL_HOST_PASSWORD = "07ae9cdfe8884d4cb7e4a0dda13c9eaa-1831c31e-2cdcb243"
+EMAIL_HOST_USER = os.environ.get("GMAIL_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("GMAIL_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_FROM = EMAIL_HOST_USER

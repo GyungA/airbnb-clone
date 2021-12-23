@@ -11,6 +11,8 @@ django-countries = "*"
 cities = "*"
 django-seed = "*"
 psycopg2 = "*"
+django-dotenv = "*"
+django-environ = "*"
 
 [dev-packages]
 flake8 = "*"
