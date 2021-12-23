@@ -142,3 +142,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
 MEDIA_URL = "/media/"
+
+
+# Email Configuration
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "brad@sandboxa5c0ee73c4f24b71b37c92585e326d06.mailgun.org"
+EMAIL_HOST_PASSWORD = "07ae9cdfe8884d4cb7e4a0dda13c9eaa-1831c31e-2cdcb243"
