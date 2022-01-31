@@ -3,14 +3,17 @@ from django.contrib.auth.admin import UserAdmin
 from rooms import models as room_models
 from . import models
 
+
 class RoomInline(admin.TabularInline):
     model = room_models.Room
+
 
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
 
-    """ Custom User Admin """
-    inlines = (RoomInline, )
+    """Custom User Admin"""
+
+    inlines = (RoomInline,)
 
     fieldsets = UserAdmin.fieldsets + (
         (
@@ -24,12 +27,13 @@ class CustomUserAdmin(UserAdmin):
                     "language",
                     "currency",
                     "superhost",
+                    "login_method",
                 )
             },
         ),
     )
 
-    list_filter = UserAdmin.list_filter + ("superhost", )
+    list_filter = UserAdmin.list_filter + ("superhost",)
 
     list_display = (
         "username",
@@ -44,4 +48,5 @@ class CustomUserAdmin(UserAdmin):
         "is_superuser",
         "email_verified",
         "email_secret",
+        "login_method",
     )
