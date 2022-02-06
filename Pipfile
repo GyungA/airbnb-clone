@@ -6,8 +6,10 @@ name = "pypi"
 [packages]
 requests = "*"
 npm = "*"
+pipenv-to-requirements = "*"
 
 [dev-packages]
+awsebcli = "*"
 
 [requires]
 python_version = "3.9"

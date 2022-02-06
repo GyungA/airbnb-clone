@@ -3,38 +3,50 @@ from django.urls import reverse
 from django_countries.fields import CountryField
 from core import models as core_models
 
+
 class AbstractItem(core_models.TimeStampedModel):
-    """ Abstract Item """
+    """Abstract Item"""
 
     name = models.CharField(max_length=80)
+
     class Meta:
-        abstract= True
+        abstract = True
+
     def __str__(self):
         return self.name
 
+
 class RoomType(AbstractItem):
-    """ RoomType Model Definition """
+    """RoomType Model Definition"""
+
     class Meta:
         verbose_name = "Room Type"
 
+
 class Amenity(AbstractItem):
-    """ Amenity Model Definition """
+    """Amenity Model Definition"""
+
     class Meta:
         verbose_name_plural = "Amenities"
 
+
 class Facility(AbstractItem):
-    """ Facility Model Definition """
+    """Facility Model Definition"""
+
     class Meta:
         verbose_name_plural = "Facilities"
 
+
 class HouseRule(AbstractItem):
-    """ HouseRule Model Definition """
+    """HouseRule Model Definition"""
+
     class Meta:
         verbose_name = "House Rule"
 
+
 class Photo(core_models.TimeStampedModel):
-    
-    """ Photo Model Definition """
+
+    """Photo Model Definition"""
 
     caption = models.CharField(max_length=80)
     file = models.ImageField(upload_to="room_photos")
@@ -43,8 +55,10 @@ class Photo(core_models.TimeStampedModel):
     def __str__(self):
         return self.caption
 
+
 class Room(core_models.TimeStampedModel):
-    """ Room Model Definition """
+    """Room Model Definition"""
+
     name = models.CharField(max_length=140)
     description = models.TextField()
     country = CountryField()
@@ -58,8 +72,12 @@ class Room(core_models.TimeStampedModel):
     check_in = models.TimeField()
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
-    host = models.ForeignKey("users.User", related_name="rooms", on_delete=models.CASCADE)
-    room_type = models.ForeignKey("RoomType", related_name="rooms", on_delete=models.SET_NULL, null=True)
+    host = models.ForeignKey(
+        "users.User", related_name="rooms", on_delete=models.CASCADE
+    )
+    room_type = models.ForeignKey(
+        "RoomType", related_name="rooms", on_delete=models.SET_NULL, null=True
+    )
     amenities = models.ManyToManyField("Amenity", related_name="rooms", blank=True)
     facilities = models.ManyToManyField("Facility", related_name="rooms", blank=True)
     house_rules = models.ManyToManyField("HouseRule", related_name="rooms", blank=True)
@@ -71,10 +89,8 @@ class Room(core_models.TimeStampedModel):
         self.city = self.city.title()
         super().save(*args, **kwargs)
 
-    
     def get_absolute_url(self):
         return reverse("rooms:detail", kwargs={"pk": self.pk})
-        
 
     def total_rating(self):
         try:
@@ -85,4 +101,7 @@ class Room(core_models.TimeStampedModel):
             return round(all_ratings / len(all_reviews), 2)
         except ZeroDivisionError:
             return "No reviews"
-            
+
+    def first_photo(self):
+        (photo,) = self.photos.all()[:1]
+        return photo.file.url
