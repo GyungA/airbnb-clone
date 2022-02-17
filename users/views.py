@@ -24,6 +24,7 @@ class LoginView(FormView):
 
 
 def LogoutView(request):
+    messages.info(request, f"See you later See you later {request.user.first_name}")
     logout(request)
     return redirect(reverse("core:home"))
 
